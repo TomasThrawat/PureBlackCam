@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Pure Black Cam</string>
+    <string name="btn_capture">📷</string>
+    <string name="btn_record_start">⏺</string>
+    <string name="btn_record_stop">⏹</string>
+    <string name="btn_flash_on">⚡ON</string>
+    <string name="btn_flash_off">⚡OFF</string>
+    <string name="res_720">720p·60</string>
+    <string name="res_1080">1080p·60</string>
+    <string name="status_recording">● تسجيل</string>
+    <string name="permissions_needed">الأذونات مطلوبة لتشغيل الكاميرا</string>
+    <string name="camera_start_failed">فشل تشغيل الكاميرا</string>
+    <string name="photo_saved">تم حفظ الصورة</string>
+    <string name="video_saved">تم حفظ الفيديو</string>
+    <string name="capture_failed">فشل الالتقاط</string>
+</resources>

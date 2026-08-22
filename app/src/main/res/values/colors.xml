@@ -1,0 +1,6 @@
+<resources>
+    <color name="pure_black">#FF000000</color>
+    <color name="pure_white">#FFFFFFFF</color>
+    <color name="dim_white">#B3FFFFFF</color>
+    <color name="rec_red">#FFE53935</color>
+</resources>

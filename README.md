@@ -1,2 +1,27 @@
-# PureBlackCam
-Minimalist fully-offline Android camera app: photo + video (720p/1080p 60fps) + flashlight. No INTERNET permission at all.
+# Pure Black Cam
+
+كاميرا مينيمال، خلفية سوداء بالكامل، أوفلاين 100%.
+
+## الوظائف
+- 📷 تصوير فوتوغرافي
+- ⏺ تسجيل فيديو: 720p/60fps أو 1080p/60fps (زر تبديل)
+- ⚡ فلاش/فلاشلايت (toggle)
+
+## الخصوصية
+- مفيش `INTERNET permission` في `AndroidManifest.xml` أصلاً → التطبيق فعلياً مش قادر يبعت أي بيانات لأي سيرفر.
+- الصور/الفيديوهات بتتحفظ محلياً بس عبر `MediaStore`:
+  - `Pictures/PureBlackCam`
+  - `Movies/PureBlackCam`
+- مفيش أي أذونات تانية (لا موقع، لا جهات اتصال، لا تخزين إعلانات).
+
+## ملاحظة عن الـ 60fps
+الكود بيطلب `60fps` عبر `Camera2Interop` (`CONTROL_AE_TARGET_FPS_RANGE`)، لكن ده طلب مش ضمان — لو السنسور/الـ ISP بتاع الجهاز مش بيدعم 60fps على الدقة المختارة، الـ camera HAL بيرجع تلقائياً لأقرب فريم ريت مدعوم (غالباً 30fps على الأجهزة الاقتصادية).
+
+## البناء
+1. افتح المجلد في Android Studio (Hedgehog+).
+2. Gradle sync تلقائي.
+3. شغّل على جهاز حقيقي (الكاميرا مش بتشتغل على emulator غالباً).
+
+- minSdk 26 / targetSdk 34
+- CameraX 1.5.1
+- Kotlin، من غير Compose، من غير أي مكتبة تحليلات/إعلانات.
