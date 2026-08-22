@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Range
+import android.view.ScaleGestureDetector
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     private var use1080p = false // false = 720p/60fps, true = 1080p/60fps
 
     private lateinit var cameraExecutor: ExecutorService
+    private var scaleGestureDetector: ScaleGestureDetector? = null
 
     private val hasAudioPermission: Boolean
         get() = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) ==
@@ -106,6 +108,8 @@ class MainActivity : AppCompatActivity() {
         btnRecord.setOnClickListener { toggleRecording() }
         btnFlash.setOnClickListener { toggleFlash() }
         btnRes.setOnClickListener { toggleResolution() }
+
+        setupPinchToZoom()
 
         if (hasPermissions()) {
             startCamera()
@@ -176,6 +180,29 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "bindToLifecycle failed", e)
             Toast.makeText(this, getString(R.string.camera_start_failed), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // ---------- Zoom ----------
+
+    private fun setupPinchToZoom() {
+        scaleGestureDetector = ScaleGestureDetector(
+            this,
+            object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+                override fun onScale(detector: ScaleGestureDetector): Boolean {
+                    val cam = camera ?: return true
+                    val zoomState = cam.cameraInfo.zoomState.value ?: return true
+                    val newZoomRatio = (zoomState.zoomRatio * detector.scaleFactor)
+                        .coerceIn(zoomState.minZoomRatio, zoomState.maxZoomRatio)
+                    cam.cameraControl.setZoomRatio(newZoomRatio)
+                    return true
+                }
+            }
+        )
+
+        previewView.setOnTouchListener { _, event ->
+            scaleGestureDetector?.onTouchEvent(event)
+            true
         }
     }
 
